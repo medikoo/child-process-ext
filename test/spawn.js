@@ -2,7 +2,7 @@
 
 const noop        = require("es5-ext/function/noop")
     , { resolve } = require("path")
-    , { assert }  = require("chai").use(require("chai-as-promised"))
+    , { assert }  = require("chai")
     , spawn       = require("../spawn");
 
 const playgroundPath = resolve(__dirname, "_playground");
@@ -26,7 +26,7 @@ describe("spawn", () => {
 		]);
 	});
 
-	it("Success exection should fulfill successfully", () => assert.isFulfilled(successProgram));
+	it("Success exection should fulfill successfully", () => successProgram.then());
 
 	it("Arguments should be passed into process", () =>
 		successProgram.then(({ stdout }) =>
@@ -48,7 +48,9 @@ describe("spawn", () => {
 		successProgram.then(({ stderr }) => assert.equal(String(stderr), "stderr"))
 	);
 
-	it("Errorneous execution should resolve with rejection", () => assert.isRejected(errorProgram));
+	it("Errorneous execution should resolve with rejection", () =>
+		errorProgram.then(throwUnexpected, noop)
+	);
 
 	it("Errorneous execution result should expose exit code", () =>
 		errorProgram.then(throwUnexpected, ({ code }) => assert.equal(code, 3))
@@ -63,7 +65,7 @@ describe("spawn", () => {
 	);
 
 	it("Invalid program execution should resolve with rejection", () =>
-		assert.isRejected(invalidProgram)
+		invalidProgram.then(throwUnexpected, noop)
 	);
 
 	it("Invalid program rejection should expose expected eror code", () =>
