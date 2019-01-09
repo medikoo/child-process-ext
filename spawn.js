@@ -3,10 +3,18 @@
 
 "use strict";
 
-const spawn = require("cross-spawn");
+const ensureString = require("es5-ext/object/validate-stringifiable-value")
+    , isValue      = require("es5-ext/object/is-value")
+    , isObject     = require("es5-ext/object/is-object")
+    , ensureObject = require("es5-ext/object/valid-object")
+    , spawn        = require("cross-spawn");
 
-module.exports = (command, args, options) => {
+module.exports = (command, args = [], options = {}) => {
 	let child;
+	command = ensureString(command);
+	if (isValue(args)) args = Array.from(ensureObject(args), ensureString);
+	if (!isObject(options)) options = {};
+
 	const promise = new Promise((resolve, reject) => {
 		child = spawn(command, args, options);
 		let stdout, stderr;

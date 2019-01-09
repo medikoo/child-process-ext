@@ -10,11 +10,11 @@
   ],
   "repository": "medikoo/child-process-ext",
   "dependencies": {
-    "cross-spawn": "^6.0.5"
+    "cross-spawn": "^6.0.5",
+    "es5-ext": "^0.10.46"
   },
   "devDependencies": {
     "chai": "^4.2",
-    "es5-ext": "^0.10.46",
     "eslint": "^5.12",
     "eslint-config-medikoo": "^2",
     "mocha": "^5.2",
