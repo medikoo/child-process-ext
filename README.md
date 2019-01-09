@@ -41,7 +41,7 @@ npm test
 
 [nix-build-image]: https://semaphoreci.com/api/v1/medikoo-org/child-process-ext/branches/master/shields_badge.svg
 [nix-build-url]: https://semaphoreci.com/medikoo-org/child-process-ext
-[win-build-image]: https://ci.appveyor.com/api/projects/status/?svg=true
+[win-build-image]: https://ci.appveyor.com/api/projects/status/8r0yv6561qwijfbe?svg=true
 [win-build-url]: https://ci.appveyor.com/api/project/medikoo/child-process-ext
 [cov-image]: https://img.shields.io/codecov/c/github/medikoo/child-process-ext.svg
 [cov-url]: https://codecov.io/gh/medikoo/child-process-ext
