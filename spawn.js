@@ -19,7 +19,7 @@ module.exports = (command, args = [], options = {}) => {
 
 		child = spawn(command, args, options)
 			.on("close", (code, signal) => {
-				const result = { code, signal, stderrBuffer, stdoutBuffer };
+				const result = { code, signal, stdoutBuffer, stderrBuffer };
 				if (code) reject(Object.assign(new Error(`Exited with code ${ code }`), result));
 				else resolve(result);
 			})
