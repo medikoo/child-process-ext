@@ -10,14 +10,13 @@ const ensureString = require("es5-ext/object/validate-stringifiable-value")
     , spawn        = require("cross-spawn");
 
 module.exports = (command, args = [], options = {}) => {
-	let child;
+	let child, stdoutBuffer, stderrBuffer;
 
 	const promise = new Promise((resolve, reject) => {
 		command = ensureString(command);
 		if (isValue(args)) args = Array.from(ensureObject(args), ensureString);
 		if (!isObject(options)) options = {};
 		child = spawn(command, args, options);
-		let stdoutBuffer, stderrBuffer;
 		child
 			.on("close", (code, signal) => {
 				const result = { code, signal, stderrBuffer, stdoutBuffer };
@@ -28,16 +27,15 @@ module.exports = (command, args = [], options = {}) => {
 		if (child.stdout) {
 			stdoutBuffer = Buffer.alloc(0);
 			child.stdout.on("data", data => {
-				stdoutBuffer = Buffer.concat([stdoutBuffer, data]);
+				promise.stdoutBuffer = stdoutBuffer = Buffer.concat([stdoutBuffer, data]);
 			});
 		}
 		if (child.stderr) {
 			stderrBuffer = Buffer.alloc(0);
 			child.stderr.on("data", data => {
-				stderrBuffer = Buffer.concat([stderrBuffer, data]);
+				promise.stderrBuffer = stderrBuffer = Buffer.concat([stderrBuffer, data]);
 			});
 		}
 	});
-	promise.child = child;
-	return promise;
+	return Object.assign(promise, { child, stdoutBuffer, stderrBuffer });
 };
