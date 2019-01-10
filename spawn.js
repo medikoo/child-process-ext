@@ -11,11 +11,11 @@ const ensureString = require("es5-ext/object/validate-stringifiable-value")
 
 module.exports = (command, args = [], options = {}) => {
 	let child;
-	command = ensureString(command);
-	if (isValue(args)) args = Array.from(ensureObject(args), ensureString);
-	if (!isObject(options)) options = {};
 
 	const promise = new Promise((resolve, reject) => {
+		command = ensureString(command);
+		if (isValue(args)) args = Array.from(ensureObject(args), ensureString);
+		if (!isObject(options)) options = {};
 		child = spawn(command, args, options);
 		let stdout, stderr;
 		child
