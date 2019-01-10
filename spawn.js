@@ -17,25 +17,29 @@ module.exports = (command, args = [], options = {}) => {
 		if (isValue(args)) args = Array.from(ensureObject(args), ensureString);
 		if (!isObject(options)) options = {};
 		child = spawn(command, args, options);
-		let stdout, stderr;
+		let stdoutBuffer, stderrBuffer;
 		child
 			.on("close", (code, signal) => {
-				const result = { code, signal, stderr, stdout };
+				const result = { code, signal, stderr: stderrBuffer, stdout: stdoutBuffer };
 				if (code) reject(Object.assign(new Error(`Exited with code ${ code }`), result));
 				else resolve(result);
 			})
 			.on("error", error => {
-				error.stdout = stdout;
-				error.stderr = stderr;
+				error.stdout = stdoutBuffer;
+				error.stderr = stderrBuffer;
 				reject(error);
 			});
 		if (child.stdout) {
-			stdout = Buffer.alloc(0);
-			child.stdout.on("data", data => { stdout = Buffer.concat([stdout, data]); });
+			stdoutBuffer = Buffer.alloc(0);
+			child.stdout.on("data", data => {
+				stdoutBuffer = Buffer.concat([stdoutBuffer, data]);
+			});
 		}
 		if (child.stderr) {
-			stderr = Buffer.alloc(0);
-			child.stderr.on("data", data => { stderr = Buffer.concat([stderr, data]); });
+			stderrBuffer = Buffer.alloc(0);
+			child.stderr.on("data", data => {
+				stderrBuffer = Buffer.concat([stderrBuffer, data]);
+			});
 		}
 	});
 	promise.child = child;
