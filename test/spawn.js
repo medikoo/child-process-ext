@@ -29,8 +29,8 @@ describe("spawn", () => {
 	it("Success exection should fulfill successfully", () => successProgram.then());
 
 	it("Arguments should be passed into process", () =>
-		successProgram.then(({ stdout }) =>
-			assert.deepEqual(JSON.parse(stdout).slice(2), ["foo", "--elo", "marko"])
+		successProgram.then(({ stdoutBuffer }) =>
+			assert.deepEqual(JSON.parse(stdoutBuffer).slice(2), ["foo", "--elo", "marko"])
 		)
 	);
 
@@ -38,14 +38,14 @@ describe("spawn", () => {
 		successProgram.then(({ code }) => assert.equal(code, 0))
 	);
 
-	it("Promise result should expose stdout", () =>
-		successProgram.then(({ stdout }) =>
-			assert.deepEqual(JSON.parse(stdout).slice(2), ["foo", "--elo", "marko"])
+	it("Promise result should expose stdout buffer", () =>
+		successProgram.then(({ stdoutBuffer }) =>
+			assert.deepEqual(JSON.parse(stdoutBuffer).slice(2), ["foo", "--elo", "marko"])
 		)
 	);
 
 	it("Promise result should expose stderr", () =>
-		successProgram.then(({ stderr }) => assert.equal(String(stderr), "stderr"))
+		successProgram.then(({ stderrBuffer }) => assert.equal(String(stderrBuffer), "stderr"))
 	);
 
 	it("Errorneous execution should resolve with rejection", () =>
@@ -57,11 +57,15 @@ describe("spawn", () => {
 	);
 
 	it("Errorneous execution result should expose stdout", () =>
-		errorProgram.then(throwUnexpected, ({ stdout }) => assert.equal(String(stdout), "stdout"))
+		errorProgram.then(throwUnexpected, ({ stdoutBuffer }) =>
+			assert.equal(String(stdoutBuffer), "stdout")
+		)
 	);
 
 	it("Errorneous execution result should expose stderr", () =>
-		errorProgram.then(throwUnexpected, ({ stderr }) => assert.equal(String(stderr), "stderr"))
+		errorProgram.then(throwUnexpected, ({ stderrBuffer }) =>
+			assert.equal(String(stderrBuffer), "stderr")
+		)
 	);
 
 	it("Invalid program execution should resolve with rejection", () =>

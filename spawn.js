@@ -20,15 +20,11 @@ module.exports = (command, args = [], options = {}) => {
 		let stdoutBuffer, stderrBuffer;
 		child
 			.on("close", (code, signal) => {
-				const result = { code, signal, stderr: stderrBuffer, stdout: stdoutBuffer };
+				const result = { code, signal, stderrBuffer, stdoutBuffer };
 				if (code) reject(Object.assign(new Error(`Exited with code ${ code }`), result));
 				else resolve(result);
 			})
-			.on("error", error => {
-				error.stdout = stdoutBuffer;
-				error.stderr = stderrBuffer;
-				reject(error);
-			});
+			.on("error", error => reject(Object.assign(error, { stdoutBuffer, stderrBuffer })));
 		if (child.stdout) {
 			stdoutBuffer = Buffer.alloc(0);
 			child.stdout.on("data", data => {
