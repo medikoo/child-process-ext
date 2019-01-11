@@ -9,10 +9,11 @@ const playgroundPath = resolve(__dirname, "_playground");
 
 describe("spawn - Successful execution", () => {
 	let program;
-	before(() =>
-		(program = spawn("./test-bin-success.js", ["foo", "--elo", "marko"], {
-			cwd: playgroundPath
-		})).catch(noop)
+	before(
+		() =>
+			(program = spawn("./test-bin-success.js", ["foo", "--elo", "marko"], {
+				cwd: playgroundPath
+			}))
 	);
 
 	it("Should fulfill successfully", () => program.then());
