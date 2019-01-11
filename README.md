@@ -16,22 +16,34 @@ npm install child-process-ext
 
 ### API
 
-#### `spawn`
+#### `spawn(command[, args[, options]])`
 
 Cross system compliant [`spawn`](https://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options) (backed by [`cross-spawn`](https://www.npmjs.com/package/cross-spawn)).
 
 Works exactly same way as node's [`spawn`](https://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options) with difference that promise is returned that resolves once process exits.
 
-Original result of `spawn` (child process instance) is exposed on promise `child` property.
+Following properties are exposed on return promise:
+
+-   `child` - child process
+-   `stdout` - stdout stream
+-   `stderr` - stderr stream
+-   `stdoutBuffer` - Buffer that exposes so far written `stdout`
+-   `stderrBuffer` - Buffer that exposes so far written `stderrr`
 
 Promise resolves with object with three properties:
 
 -   `code` - Exit code of a child proces
 -   `signal` - Signal that terminated the process
--   `stdout` - Buffer containing gathered `stdout` content
--   `stderr` - Buffer containing gathered `stderr` content
+-   `stdoutBuffer` - Buffer containing gathered `stdout` content
+-   `stderrBuffer` - Buffer containing gathered `stderr` content
 
 If process exits with non zero code, then promise is rejected with an error exposing same properties as above
+
+##### Non standard options
+
+###### `split: false`
+
+Whether stdout data should be split by lines. If set to `true`, then `stdout` and `stderr` on promise expose mappers of original `stdout` and `stderr` that emit each line with distinct `data` event
 
 ### Tests
 
