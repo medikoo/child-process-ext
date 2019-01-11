@@ -1,7 +1,6 @@
 "use strict";
 
-const noop        = require("es5-ext/function/noop")
-    , { resolve } = require("path")
+const { resolve } = require("path")
     , { assert }  = require("chai")
     , spawn       = require("../../spawn");
 
