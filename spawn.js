@@ -3,15 +3,17 @@
 
 "use strict";
 
-const ensureString = require("es5-ext/object/validate-stringifiable-value")
-    , isValue      = require("es5-ext/object/is-value")
-    , isObject     = require("es5-ext/object/is-object")
-    , ensureObject = require("es5-ext/object/valid-object")
-    , spawn        = require("cross-spawn")
-    , split        = require("split2");
+const ensureString  = require("es5-ext/object/validate-stringifiable-value")
+    , isValue       = require("es5-ext/object/is-value")
+    , isObject      = require("es5-ext/object/is-object")
+    , ensureObject  = require("es5-ext/object/valid-object")
+    , spawn         = require("cross-spawn")
+    , split         = require("split2")
+    , streamPromise = require("stream-promise");
 
 module.exports = (command, args = [], options = {}) => {
 	let child, stdout, stderr, stdoutBuffer, stderrBuffer;
+	const resolveListeners = [];
 
 	const promise = new Promise((resolve, reject) => {
 		command = ensureString(command);
@@ -21,10 +23,14 @@ module.exports = (command, args = [], options = {}) => {
 		child = spawn(command, args, options)
 			.on("close", (code, signal) => {
 				const result = { code, signal, stdoutBuffer, stderrBuffer };
+				for (const listener of resolveListeners) listener();
 				if (code) reject(Object.assign(new Error(`Exited with code ${ code }`), result));
 				else resolve(result);
 			})
-			.on("error", error => reject(Object.assign(error, { stdoutBuffer, stderrBuffer })));
+			.on("error", error => {
+				for (const listener of resolveListeners) listener();
+				reject(Object.assign(error, { stdoutBuffer, stderrBuffer }));
+			});
 
 		if (child.stdout) {
 			({ stdout } = child);
@@ -43,5 +49,15 @@ module.exports = (command, args = [], options = {}) => {
 			});
 		}
 	});
+	if (stdout) {
+		streamPromise(
+			stdout, new Promise(resolve => resolveListeners.push(() => resolve(stdoutBuffer)))
+		);
+	}
+	if (stderr) {
+		streamPromise(
+			stderr, new Promise(resolve => resolveListeners.push(() => resolve(stderrBuffer)))
+		);
+	}
 	return Object.assign(promise, { child, stdout, stderr, stdoutBuffer, stderrBuffer });
 };

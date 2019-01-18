@@ -25,8 +25,8 @@ Works exactly same way as node's [`spawn`](https://nodejs.org/api/child_process.
 Following properties are exposed on return promise:
 
 -   `child` - child process
--   `stdout` - stdout stream
--   `stderr` - stderr stream
+-   `stdout` - stdout stream (decorated so it can also be used as promise)
+-   `stderr` - stderr stream (decorated so it can also be used as promise)
 -   `stdoutBuffer` - Buffer that exposes so far written `stdout`
 -   `stderrBuffer` - Buffer that exposes so far written `stderrr`
 
