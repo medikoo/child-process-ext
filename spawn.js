@@ -8,7 +8,7 @@ const ensureString = require("es5-ext/object/validate-stringifiable-value")
     , isObject     = require("es5-ext/object/is-object")
     , ensureObject = require("es5-ext/object/valid-object")
     , spawn        = require("cross-spawn")
-    , split        = require("split");
+    , split        = require("split2");
 
 module.exports = (command, args = [], options = {}) => {
 	let child, stdout, stderr, stdoutBuffer, stderrBuffer;
@@ -28,7 +28,7 @@ module.exports = (command, args = [], options = {}) => {
 
 		if (child.stdout) {
 			({ stdout } = child);
-			if (options.split) stdout = stdout.pipe(split(null, null, { trailing: false }));
+			if (options.split) stdout = stdout.pipe(split());
 			stdoutBuffer = Buffer.alloc(0);
 			child.stdout.on("data", data => {
 				promise.stdoutBuffer = stdoutBuffer = Buffer.concat([stdoutBuffer, data]);
@@ -36,7 +36,7 @@ module.exports = (command, args = [], options = {}) => {
 		}
 		if (child.stderr) {
 			({ stderr } = child);
-			if (options.split) stderr = stderr.pipe(split(null, null, { trailing: false }));
+			if (options.split) stderr = stderr.pipe(split());
 			stderrBuffer = Buffer.alloc(0);
 			child.stderr.on("data", data => {
 				promise.stderrBuffer = stderrBuffer = Buffer.concat([stderrBuffer, data]);

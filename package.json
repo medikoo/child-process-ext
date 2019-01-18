@@ -12,7 +12,7 @@
   "dependencies": {
     "cross-spawn": "^6.0.5",
     "es5-ext": "^0.10.46",
-    "split": "^1.0.1"
+    "split2": "^3.1"
   },
   "devDependencies": {
     "chai": "^4.2",

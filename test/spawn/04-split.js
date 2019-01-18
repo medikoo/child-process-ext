@@ -20,5 +20,5 @@ describe("spawn - Split stdout", () => {
 		assert.deepEqual(stdoutLines, ["firstBLAline", "secondBLAline", "", "fourthBLAline"])
 	);
 
-	it("Should split stderr", () => assert.deepEqual(stderrLines, ["one"]));
+	it("Should split stderr", () => assert.deepEqual(stderrLines, ["one", "two"]));
 });
