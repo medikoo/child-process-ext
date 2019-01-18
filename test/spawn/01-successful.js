@@ -10,7 +10,7 @@ describe("spawn - Successful execution", () => {
 	let program;
 	before(
 		() =>
-			(program = spawn("./test-bin-success.js", ["foo", "--elo", "marko"], {
+			(program = spawn("./test-bin-success", ["foo", "--elo", "marko"], {
 				cwd: playgroundPath
 			}))
 	);

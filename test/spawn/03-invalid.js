@@ -12,7 +12,7 @@ const throwUnexpected = () => { throw new Error("Unexpected"); };
 describe("spawn - Invalid execution", () => {
 	let program;
 	before(() =>
-		(program = spawn("./test-bin-non-existing.js", ["umpa", "--elo", "marko"], {
+		(program = spawn("./test-bin-non-existing", ["umpa", "--elo", "marko"], {
 			cwd: playgroundPath
 		})).catch(noop)
 	);

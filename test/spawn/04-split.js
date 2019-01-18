@@ -10,7 +10,7 @@ describe("spawn - Split stdout", () => {
 	let program;
 	const stdoutLines = [], stderrLines = [];
 	before(() => {
-		program = spawn("./test-bin-split.js", null, { cwd: playgroundPath, split: true });
+		program = spawn("./test-bin-split", null, { cwd: playgroundPath, split: true });
 		program.stdout.on("data", data => stdoutLines.push(data));
 		program.stderr.on("data", data => stderrLines.push(data));
 		return program;
