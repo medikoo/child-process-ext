@@ -41,7 +41,7 @@ If process exits with non zero code, then promise is rejected with an error expo
 
 ##### Non standard options
 
-###### `split: false`
+###### split `bool` (default: `false`)
 
 Whether stdout data should be split by lines. If set to `true`, then `stdout` and `stderr` on promise expose mappers of original `stdout` and `stderr` that emit each line with distinct `data` event
 
