@@ -4,21 +4,29 @@ const { resolve } = require("path")
     , { assert }  = require("chai")
     , spawn       = require("../../spawn");
 
-const playgroundPath = resolve(__dirname, "_playground");
+const playgroundPath = resolve(__dirname, "_playground")
+    , stdoutLines = ["firstBLAline", "secondBLAline", "", "fourthBLAline"]
+    , stderrLines = ["one", "two"];
 
 describe("spawn - Split stdout", () => {
 	let program;
-	const stdoutLines = [], stderrLines = [];
+	const reportedStdoutLines = [], reportedStderrLines = [];
 	before(() => {
 		program = spawn("./test-bin-split", null, { cwd: playgroundPath, split: true });
-		program.stdout.on("data", data => stdoutLines.push(data));
-		program.stderr.on("data", data => stderrLines.push(data));
+		program.stdout.on("data", data => reportedStdoutLines.push(data));
+		program.stderr.on("data", data => reportedStderrLines.push(data));
 		return program;
 	});
 
-	it("Should split stdout", () =>
-		assert.deepEqual(stdoutLines, ["firstBLAline", "secondBLAline", "", "fourthBLAline"])
+	it("Should split stdout", () => assert.deepEqual(reportedStdoutLines, stdoutLines));
+
+	it("Should split stderr", () => assert.deepEqual(reportedStderrLines, stderrLines));
+
+	it("stdout should resolve with array of lines", () =>
+		program.stdout.then(result => assert.deepEqual(result, stdoutLines))
 	);
 
-	it("Should split stderr", () => assert.deepEqual(stderrLines, ["one", "two"]));
+	it("stderr should resolve with array of lines", () =>
+		program.stderr.then(result => assert.deepEqual(result, stderrLines))
+	);
 });
