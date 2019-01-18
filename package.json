@@ -1,6 +1,6 @@
 {
   "name": "child-process-ext",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Extensions to Node.js child_process module",
   "author": "Mariusz Nowak <medyk@medikoo.com> (http://www.medikoo.com/)",
   "keywords": [

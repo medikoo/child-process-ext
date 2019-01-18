@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/medikoo/child-process-ext/compare/v1.0.0...v2.0.0) (2019-01-18)
+
+
+### Features
+
+* decorate std streams with promise behavior ([bbf5dc1](https://github.com/medikoo/child-process-ext/commit/bbf5dc1))
+* improve split handling ([3a73750](https://github.com/medikoo/child-process-ext/commit/3a73750))
+
+
+### BREAKING CHANGES
+
+* Trailing non-empty line is now emittted
+
+
+
 <a name="1.0.0"></a>
 # 1.0.0 (2019-01-11)
 
