@@ -24,8 +24,16 @@ module.exports = (command, args = [], options = {}) => {
 			.on("close", (code, signal) => {
 				const result = { code, signal, stdoutBuffer, stderrBuffer };
 				for (const listener of resolveListeners) listener();
-				if (code) reject(Object.assign(new Error(`Exited with code ${ code }`), result));
-				else resolve(result);
+				if (code) {
+					reject(
+						Object.assign(
+							new Error(
+								`\`${ command } ${ args.join(" ") }\` Exited with code ${ code }`
+							),
+							result
+						)
+					);
+				} else resolve(result);
 			})
 			.on("error", error => {
 				for (const listener of resolveListeners) listener();
