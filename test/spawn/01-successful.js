@@ -19,7 +19,7 @@ describe("spawn - Successful execution", () => {
 
 	it("Arguments should be passed into process", () =>
 		program.then(({ stdoutBuffer }) =>
-			assert.deepEqual(JSON.parse(stdoutBuffer).slice(2), ["foo", "--elo", "marko"])
+			assert.deepEqual(JSON.parse(stdoutBuffer), ["foo", "--elo", "marko"])
 		)
 	);
 
@@ -29,7 +29,7 @@ describe("spawn - Successful execution", () => {
 
 	it("Promise result should expose stdout buffer", () =>
 		program.then(({ stdoutBuffer }) =>
-			assert.deepEqual(JSON.parse(stdoutBuffer).slice(2), ["foo", "--elo", "marko"])
+			assert.deepEqual(JSON.parse(stdoutBuffer), ["foo", "--elo", "marko"])
 		)
 	);
 
