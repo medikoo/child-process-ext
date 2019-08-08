@@ -3,5 +3,7 @@
 "use strict";
 
 process.stdout.write(JSON.stringify(process.argv.slice(2)));
-process.stderr.write("\nstderr");
-process.stdout.write("\nstdout");
+setTimeout(() => {
+	process.stderr.write("\nstderr");
+	process.stdout.write("\nstdout");
+});

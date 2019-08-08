@@ -27,8 +27,10 @@ Following properties are exposed on return promise:
 -   `child` - child process
 -   `stdout` - stdout stream (decorated so it can also be used as promise)
 -   `stderr` - stderr stream (decorated so it can also be used as promise)
+-   `std` - Merged stdout & stderr stream (decorated so it can also be used as promise)
 -   `stdoutBuffer` - Buffer that exposes so far written `stdout`
 -   `stderrBuffer` - Buffer that exposes so far written `stderrr`
+-   `stdBuffer` - Buffer that exposes so far written `std`
 
 Promise resolves with object with three properties:
 
@@ -36,6 +38,7 @@ Promise resolves with object with three properties:
 -   `signal` - Signal that terminated the process
 -   `stdoutBuffer` - Buffer containing gathered `stdout` content
 -   `stderrBuffer` - Buffer containing gathered `stderr` content
+-   `stdBuffer` - Buffer containing gathered `stderr` content
 
 If process exits with non zero code, then promise is rejected with an error exposing same properties as above
 

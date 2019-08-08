@@ -40,4 +40,12 @@ describe("spawn - Successful execution", () => {
 	it("Promise result should expose stderr buffer", () =>
 		program.then(({ stderrBuffer }) => assert.equal(String(stderrBuffer), "\nstderr"))
 	);
+
+	it("Promise result should expose merged std buffer", () =>
+		program.then(({ stdBuffer }) =>
+			assert.equal(
+				String(stdBuffer), `${ JSON.stringify(["foo", "--elo", "marko"]) }\nstderr\nstdout`
+			)
+		)
+	);
 });
