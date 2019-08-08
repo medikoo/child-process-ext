@@ -19,7 +19,9 @@ describe("spawn - Successful execution", () => {
 
 	it("Arguments should be passed into process", () =>
 		program.then(({ stdoutBuffer }) =>
-			assert.deepEqual(JSON.parse(stdoutBuffer), ["foo", "--elo", "marko"])
+			assert.equal(
+				String(stdoutBuffer), `${ JSON.stringify(["foo", "--elo", "marko"]) }\nstdout`
+			)
 		)
 	);
 
@@ -29,11 +31,13 @@ describe("spawn - Successful execution", () => {
 
 	it("Promise result should expose stdout buffer", () =>
 		program.then(({ stdoutBuffer }) =>
-			assert.deepEqual(JSON.parse(stdoutBuffer), ["foo", "--elo", "marko"])
+			assert.deepEqual(
+				String(stdoutBuffer), `${ JSON.stringify(["foo", "--elo", "marko"]) }\nstdout`
+			)
 		)
 	);
 
 	it("Promise result should expose stderr", () =>
-		program.then(({ stderrBuffer }) => assert.equal(String(stderrBuffer), "stderr"))
+		program.then(({ stderrBuffer }) => assert.equal(String(stderrBuffer), "\nstderr"))
 	);
 });
