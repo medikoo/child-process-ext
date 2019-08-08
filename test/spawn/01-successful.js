@@ -37,7 +37,7 @@ describe("spawn - Successful execution", () => {
 		)
 	);
 
-	it("Promise result should expose stderr", () =>
+	it("Promise result should expose stderr buffer", () =>
 		program.then(({ stderrBuffer }) => assert.equal(String(stderrBuffer), "\nstderr"))
 	);
 });
