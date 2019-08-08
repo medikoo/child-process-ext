@@ -31,7 +31,7 @@ describe("spawn - Successful execution", () => {
 
 	it("Promise result should expose stdout buffer", () =>
 		program.then(({ stdoutBuffer }) =>
-			assert.deepEqual(
+			assert.equal(
 				String(stdoutBuffer), `${ JSON.stringify(["foo", "--elo", "marko"]) }\nstdout`
 			)
 		)
