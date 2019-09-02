@@ -3,17 +3,13 @@
 
 "use strict";
 
-const ensureString    = require("es5-ext/object/validate-stringifiable-value")
-    , isValue         = require("es5-ext/object/is-value")
-    , isObject        = require("es5-ext/object/is-object")
-    , ensureObject    = require("es5-ext/object/valid-object")
-    , log             = require("log").get("child-process-ext:spawn")
-    , { PassThrough } = require("stream")
-    , spawn           = require("cross-spawn")
-    , split           = require("split2")
-    , streamPromise   = require("stream-promise");
-
-const stdOutLog = log.get("std:out"), stdErrLog = log.get("std:err");
+const ensureString = require("es5-ext/object/validate-stringifiable-value")
+    , isValue      = require("es5-ext/object/is-value")
+    , isObject     = require("es5-ext/object/is-object")
+    , ensureObject = require("es5-ext/object/valid-object")
+    , log          = require("log").get("child-process-ext:spawn")
+    , spawn        = require("cross-spawn")
+    , setupStd     = require("./lib/private/spawn/setup-std");
 
 let processCounter = 0;
 
@@ -53,55 +49,7 @@ module.exports = (command, args = [], options = {}) => {
 				reject(Object.assign(error, result));
 			});
 
-		if (child.stdout) {
-			initResult.stdout = child.stdout;
-			if (options.split) initResult.stdout = initResult.stdout.pipe(split());
-			result.stdoutBuffer = Buffer.alloc(0);
-			initResult.std = child.stdout.pipe(new PassThrough());
-			result.stdBuffer = Buffer.alloc(0);
-			child.stdout.on("data", data => {
-				stdOutLog.debug("[%d] %s", processIndex, data);
-				result.stdoutBuffer = Buffer.concat([result.stdoutBuffer, data]);
-				result.stdBuffer = Buffer.concat([result.stdBuffer, data]);
-			});
-			streamPromise(
-				initResult.stdout,
-				new Promise(stdoutResolve =>
-					resolveListeners.push(() => stdoutResolve(result.stdoutBuffer))
-				)
-			);
-			streamPromise(
-				initResult.std,
-				new Promise(stdResolve => resolveListeners.push(() => stdResolve(result.stdBuffer)))
-			);
-		} else if (stdOutLog.debug.isEnabled) {
-			stdOutLog.warn(
-				"[%d] cannot expose %s output, as it's not exposed on a spawned process",
-				processIndex, "stdout"
-			);
-		}
-		if (child.stderr) {
-			initResult.stderr = child.stderr;
-			if (options.split) initResult.stderr = initResult.stderr.pipe(split());
-			result.stderrBuffer = Buffer.alloc(0);
-			child.stderr.pipe(initResult.std);
-			child.stderr.on("data", data => {
-				stdErrLog.debug("[%d] %s", processIndex, data);
-				result.stderrBuffer = Buffer.concat([result.stderrBuffer, data]);
-				result.stdBuffer = Buffer.concat([result.stdBuffer, data]);
-			});
-			streamPromise(
-				initResult.stderr,
-				new Promise(stderrResolve =>
-					resolveListeners.push(() => stderrResolve(result.stderrBuffer))
-				)
-			);
-		} else if (stdErrLog.debug.isEnabled) {
-			stdErrLog.warn(
-				"[%d] cannot expose %s output, as it's not exposed on a spawned process",
-				processIndex, "stderr"
-			);
-		}
+		setupStd({ processIndex, resolveListeners, child, initResult, result, options });
 	});
 
 	return Object.assign(promise, { child }, initResult, {
