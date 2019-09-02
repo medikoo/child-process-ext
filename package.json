@@ -1,55 +1,55 @@
 {
-  "name": "child-process-ext",
-  "version": "2.0.0",
-  "description": "Extensions to Node.js child_process module",
-  "author": "Mariusz Nowak <medyk@medikoo.com> (http://www.medikoo.com/)",
-  "keywords": [
-    "child_process",
-    "node",
-    "spawn"
-  ],
-  "repository": "medikoo/child-process-ext",
-  "dependencies": {
-    "cross-spawn": "^6.0.5",
-    "es5-ext": "^0.10.46",
-    "log": "^6.0.0",
-    "split2": "^3.1",
-    "stream-promise": "^3.1"
-  },
-  "devDependencies": {
-    "chai": "^4.2",
-    "eslint": "^5.12",
-    "eslint-config-medikoo": "^2",
-    "mocha": "^5.2",
-    "nyc": "^13.1"
-  },
-  "eslintConfig": {
-    "extends": "medikoo",
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "overrides": [
-      {
-        "files": "test/**/*.js",
-        "env": {
-          "mocha": true
-        }
-      }
-    ]
-  },
-  "nyc": {
-    "all": true,
-    "exclude": [
-      "coverage/**",
-      "test/**"
-    ]
-  },
-  "scripts": {
-    "coverage": "nyc --reporter=lcov --reporter=html --reporter=text-summary npm test",
-    "check-coverage": "npm run coverage && nyc check-coverage --statements 80 --function 80 --branches 50 --lines 80",
-    "lint": "eslint --ignore-path=.gitignore .",
-    "test": "mocha --recursive"
-  },
-  "license": "ISC"
+	"name": "child-process-ext",
+	"version": "2.0.0",
+	"description": "Extensions to Node.js child_process module",
+	"author": "Mariusz Nowak <medyk@medikoo.com> (http://www.medikoo.com/)",
+	"keywords": [
+		"child_process",
+		"node",
+		"spawn"
+	],
+	"repository": "medikoo/child-process-ext",
+	"dependencies": {
+		"cross-spawn": "^6.0.5",
+		"es5-ext": "^0.10.46",
+		"log": "^6.0.0",
+		"split2": "^3.1",
+		"stream-promise": "^3.1"
+	},
+	"devDependencies": {
+		"chai": "^4.2",
+		"eslint": "^5.12",
+		"eslint-config-medikoo": "^2",
+		"mocha": "^5.2",
+		"nyc": "^13.1"
+	},
+	"eslintConfig": {
+		"extends": "medikoo",
+		"root": true,
+		"env": {
+			"node": true
+		},
+		"overrides": [
+			{
+				"files": "test/**/*.js",
+				"env": {
+					"mocha": true
+				}
+			}
+		]
+	},
+	"nyc": {
+		"all": true,
+		"exclude": [
+			"coverage/**",
+			"test/**"
+		]
+	},
+	"scripts": {
+		"coverage": "nyc --reporter=lcov --reporter=html --reporter=text-summary npm test",
+		"check-coverage": "npm run coverage && nyc check-coverage --statements 80 --function 80 --branches 50 --lines 80",
+		"lint": "eslint --ignore-path=.gitignore .",
+		"test": "mocha --recursive"
+	},
+	"license": "ISC"
 }
