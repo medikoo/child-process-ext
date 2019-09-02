@@ -18,8 +18,8 @@ const stdOutLog = log.get("std:out"), stdErrLog = log.get("std:err");
 let processCounter = 0;
 
 module.exports = (command, args = [], options = {}) => {
-	let child, std, stdout, stderr;
-	const result = {}, resolveListeners = [], processIndex = ++processCounter;
+	let child;
+	const initResult = {}, result = {}, resolveListeners = [], processIndex = ++processCounter;
 
 	const promise = new Promise((resolve, reject) => {
 		command = ensureString(command);
@@ -54,10 +54,10 @@ module.exports = (command, args = [], options = {}) => {
 			});
 
 		if (child.stdout) {
-			({ stdout } = child);
-			if (options.split) stdout = stdout.pipe(split());
+			initResult.stdout = child.stdout;
+			if (options.split) initResult.stdout = initResult.stdout.pipe(split());
 			result.stdoutBuffer = Buffer.alloc(0);
-			std = child.stdout.pipe(new PassThrough());
+			initResult.std = child.stdout.pipe(new PassThrough());
 			result.stdBuffer = Buffer.alloc(0);
 			child.stdout.on("data", data => {
 				stdOutLog.debug("[%d] %s", processIndex, data);
@@ -67,13 +67,13 @@ module.exports = (command, args = [], options = {}) => {
 				promise.stdBuffer = result.stdBuffer = Buffer.concat([result.stdBuffer, data]);
 			});
 			streamPromise(
-				stdout,
+				initResult.stdout,
 				new Promise(stdoutResolve =>
 					resolveListeners.push(() => stdoutResolve(result.stdoutBuffer))
 				)
 			);
 			streamPromise(
-				std,
+				initResult.std,
 				new Promise(stdResolve => resolveListeners.push(() => stdResolve(result.stdBuffer)))
 			);
 		} else if (stdOutLog.debug.isEnabled) {
@@ -83,10 +83,10 @@ module.exports = (command, args = [], options = {}) => {
 			);
 		}
 		if (child.stderr) {
-			({ stderr } = child);
-			if (options.split) stderr = stderr.pipe(split());
+			initResult.stderr = child.stderr;
+			if (options.split) initResult.stderr = initResult.stderr.pipe(split());
 			result.stderrBuffer = Buffer.alloc(0);
-			child.stderr.pipe(std);
+			child.stderr.pipe(initResult.std);
 			child.stderr.on("data", data => {
 				stdErrLog.debug("[%d] %s", processIndex, data);
 				promise.stderrBuffer = result.stderrBuffer = Buffer.concat([
@@ -95,7 +95,7 @@ module.exports = (command, args = [], options = {}) => {
 				promise.stdBuffer = result.stdBuffer = Buffer.concat([result.stdBuffer, data]);
 			});
 			streamPromise(
-				stderr,
+				initResult.stderr,
 				new Promise(stderrResolve =>
 					resolveListeners.push(() => stderrResolve(result.stderrBuffer))
 				)
@@ -108,5 +108,5 @@ module.exports = (command, args = [], options = {}) => {
 		}
 	});
 
-	return Object.assign(promise, { child, std, stdout, stderr }, result);
+	return Object.assign(promise, { child }, initResult, result);
 };
