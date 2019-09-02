@@ -21,7 +21,8 @@
 		"eslint": "^5.12",
 		"eslint-config-medikoo": "^2",
 		"mocha": "^5.2",
-		"nyc": "^13.1"
+		"nyc": "^13.1",
+		"prettier-elastic": "^1.18.2"
 	},
 	"eslintConfig": {
 		"extends": "medikoo",
@@ -45,10 +46,26 @@
 			"test/**"
 		]
 	},
+	"prettier": {
+		"printWidth": 100,
+		"tabWidth": 4,
+		"overrides": [
+			{
+				"files": [
+					"*.md"
+				],
+				"options": {
+					"tabWidth": 2
+				}
+			}
+		]
+	},
 	"scripts": {
 		"coverage": "nyc --reporter=lcov --reporter=html --reporter=text-summary npm test",
 		"check-coverage": "npm run coverage && nyc check-coverage --statements 80 --function 80 --branches 50 --lines 80",
 		"lint": "eslint --ignore-path=.gitignore .",
+		"prettier-check": "prettier -c --ignore-path .gitignore \"**/*.{css,html,js,json,md,yaml,yml}\"",
+		"prettify": "prettier --write --ignore-path .gitignore \"**/*.{css,html,js,json,md,yaml,yml}\"",
 		"test": "mocha --recursive"
 	},
 	"license": "ISC"
