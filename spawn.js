@@ -63,6 +63,15 @@ module.exports = (command, args = [], options = {}) => {
 				promise.stdoutBuffer = stdoutBuffer = Buffer.concat([stdoutBuffer, data]);
 				promise.stdBuffer = stdBuffer = Buffer.concat([stdBuffer, data]);
 			});
+			streamPromise(
+				stdout,
+				new Promise(stdoutResolve =>
+					resolveListeners.push(() => stdoutResolve(stdoutBuffer))
+				)
+			);
+			streamPromise(
+				std, new Promise(stdResolve => resolveListeners.push(() => stdResolve(stdBuffer)))
+			);
 		} else if (stdOutLog.debug.isEnabled) {
 			stdOutLog.warn(
 				"[%d] cannot expose %s output, as it's not exposed on a spawned process",
@@ -79,6 +88,12 @@ module.exports = (command, args = [], options = {}) => {
 				promise.stderrBuffer = stderrBuffer = Buffer.concat([stderrBuffer, data]);
 				promise.stdBuffer = stdBuffer = Buffer.concat([stdBuffer, data]);
 			});
+			streamPromise(
+				stderr,
+				new Promise(stderrResolve =>
+					resolveListeners.push(() => stderrResolve(stderrBuffer))
+				)
+			);
 		} else if (stdErrLog.debug.isEnabled) {
 			stdErrLog.warn(
 				"[%d] cannot expose %s output, as it's not exposed on a spawned process",
@@ -86,17 +101,7 @@ module.exports = (command, args = [], options = {}) => {
 			);
 		}
 	});
-	if (stdout) {
-		streamPromise(
-			stdout, new Promise(resolve => resolveListeners.push(() => resolve(stdoutBuffer)))
-		);
-		streamPromise(std, new Promise(resolve => resolveListeners.push(() => resolve(stdBuffer))));
-	}
-	if (stderr) {
-		streamPromise(
-			stderr, new Promise(resolve => resolveListeners.push(() => resolve(stderrBuffer)))
-		);
-	}
+
 	return Object.assign(promise, {
 		child,
 		std,
