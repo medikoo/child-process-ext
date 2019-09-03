@@ -11,6 +11,8 @@ const ensureString = require("es5-ext/object/validate-stringifiable-value")
     , spawn        = require("cross-spawn")
     , setupStd     = require("./lib/private/spawn/setup-std");
 
+const stdinLog = log.get("std:in");
+
 let processCounter = 0;
 
 module.exports = (command, args = [], options = {}) => {
@@ -50,6 +52,11 @@ module.exports = (command, args = [], options = {}) => {
 			});
 
 		setupStd({ processIndex, resolveListeners, child, initResult, result, options });
+
+		if (options.shouldCloseStdin) {
+			if (child.stdin) child.stdin.end();
+			else stdinLog.notice("[%d] cannot close stdin, as it's not exposed on a child process");
+		}
 	});
 
 	return Object.assign(promise, { child }, initResult, {

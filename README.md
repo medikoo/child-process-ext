@@ -48,6 +48,11 @@ If process exits with non zero code, then promise is rejected with an error expo
 
 Whether stdout data should be split by lines. If set to `true`, then `stdout` and `stderr` on promise expose mappers of original `stdout` and `stderr` that emit each line with distinct `data` event
 
+###### shouldCloseStdin `bool` (default: `false`)
+
+Whether stdin should be closed. Applicable for spawned processes where `stdin` is set to other than `'inherit'` mode, and underlying processes is reading from `stdin`. Not providing any `stdin` output, may produce stall if process logic waits for an input.
+_See: [get-stdin#13](https://github.com/sindresorhus/get-stdin/issues/13#issuecomment-279234249) for more information_
+
 ### Tests
 
 ```bash
