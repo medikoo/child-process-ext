@@ -1,6 +1,23 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [2.1.0](https://github.com/medikoo/child-process-ext/compare/v2.0.0...v2.1.0) (2019-09-03)
+
+### Features
+
+- Configure debug logging ([deb3ea1](https://github.com/medikoo/child-process-ext/commit/deb3ea1))
+- Expose std & stdBuffer properties (merged std output) ([dabf7ca](https://github.com/medikoo/child-process-ext/commit/dabf7ca))
+- Improve exit error message ([f52dfd9](https://github.com/medikoo/child-process-ext/commit/f52dfd9))
+- Introduce `shouldCloseStdin` option ([ecddc13](https://github.com/medikoo/child-process-ext/commit/ecddc13))
+
+### Tests
+
+- Improve assert method ([0237539](https://github.com/medikoo/child-process-ext/commit/0237539))
+- Improve test case ([5831f6d](https://github.com/medikoo/child-process-ext/commit/5831f6d))
+- Improve test name ([448b6e5](https://github.com/medikoo/child-process-ext/commit/448b6e5))
+- improve tests ([33043d8](https://github.com/medikoo/child-process-ext/commit/33043d8))
+- Simplify ([cc26813](https://github.com/medikoo/child-process-ext/commit/cc26813))
 
 <a name="2.0.0"></a>
 
