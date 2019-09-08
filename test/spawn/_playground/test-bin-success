@@ -5,5 +5,5 @@
 process.stdout.write(JSON.stringify(process.argv.slice(2)));
 setTimeout(() => {
 	process.stderr.write("\nstderr");
-	setTimeout(() => process.stdout.write("\nstdout"));
+	setTimeout(() => process.stdout.write("\nstdout"), 10);
 });
