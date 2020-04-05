@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.1](https://github.com/medikoo/child-process-ext/compare/v2.1.0...v2.1.1) (2020-04-05)
+
+### Bug Fixes
+
+- Ensure to maintain dynamic resolution of cumulated buffers ([3fdeab5](https://github.com/medikoo/child-process-ext/commit/3fdeab5359b12c2cb03dce93b8ee4160425d11f8)) ([Mariusz Nowak](https://github.com/medikoo))
+
 ## [2.1.0](https://github.com/medikoo/child-process-ext/compare/v2.0.0...v2.1.0) (2019-09-03)
 
 ### Features
