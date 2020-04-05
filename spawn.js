@@ -7,6 +7,7 @@ const ensureString = require("es5-ext/object/validate-stringifiable-value")
     , isValue      = require("es5-ext/object/is-value")
     , isObject     = require("es5-ext/object/is-object")
     , ensureObject = require("es5-ext/object/valid-object")
+    , mixin        = require("es5-ext/object/mixin")
     , log          = require("log").get("child-process-ext:spawn")
     , spawn        = require("cross-spawn")
     , setupStd     = require("./lib/private/spawn/setup-std");
@@ -59,7 +60,7 @@ module.exports = (command, args = [], options = {}) => {
 		}
 	});
 
-	return Object.assign(promise, { child }, initResult, {
+	return mixin(Object.assign(promise, { child }, initResult), {
 		get stdoutBuffer() { return result.stdoutBuffer; },
 		get stderrBuffer() { return result.stderrBuffer; },
 		get stdBuffer() { return result.stdBuffer; }
