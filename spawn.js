@@ -9,10 +9,10 @@ const ensureString = require("es5-ext/object/validate-stringifiable-value")
     , ensureObject = require("es5-ext/object/valid-object")
     , mixin        = require("es5-ext/object/mixin")
     , log          = require("log").get("child-process-ext:spawn")
-    , { spawn }    = require("child_process")
-    , setupStd     = require("./lib/private/spawn/setup-std");
+    , { spawn }    = require("child_process");
+// , setupStd     = require("./lib/private/spawn/setup-std");
 
-const stdinLog = log.get("std:in");
+// const stdinLog = log.get("std:in");
 
 let processCounter = 0;
 
@@ -20,7 +20,7 @@ module.exports = (command, args = [], options = {}) => {
 	let child;
 	const initResult = {}, result = {}, resolveListeners = [], processIndex = ++processCounter;
 
-	console.error("Use debug spawn v6");
+	console.error("Use debug spawn v7");
 
 	const promise = new Promise((resolve, reject) => {
 		command = ensureString(command);
@@ -54,7 +54,9 @@ module.exports = (command, args = [], options = {}) => {
 				reject(Object.assign(error, result));
 			});
 
-		setupStd({ processIndex, resolveListeners, child, initResult, result, options });
+		child.stdout.on("data", () => {});
+		child.stderr.on("data", () => {});
+		// setupStd({ processIndex, resolveListeners, child, initResult, result, options });
 
 		// if (options.shouldCloseStdin) {
 		// 	if (child.stdin) child.stdin.end();
