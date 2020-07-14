@@ -9,10 +9,10 @@ const ensureString = require("es5-ext/object/validate-stringifiable-value")
     , ensureObject = require("es5-ext/object/valid-object")
     , mixin        = require("es5-ext/object/mixin")
     , log          = require("log").get("child-process-ext:spawn")
-    , { spawn }    = require("child_process")
-    , setupStd     = require("./lib/private/spawn/setup-std");
+    , { spawn }    = require("child_process");
+// , setupStd     = require("./lib/private/spawn/setup-std");
 
-const stdinLog = log.get("std:in");
+// const stdinLog = log.get("std:in");
 
 let processCounter = 0;
 
@@ -20,13 +20,13 @@ module.exports = (command, args = [], options = {}) => {
 	let child;
 	const initResult = {}, result = {}, resolveListeners = [], processIndex = ++processCounter;
 
-	console.error("Use debug spawn v3");
+	console.error("Use debug spawn v4");
 
 	const promise = new Promise((resolve, reject) => {
-		command = ensureString(command);
-		if (isValue(args)) args = Array.from(ensureObject(args), ensureString);
-		if (!isObject(options)) options = {};
-		log.debug("[%d] run %s with %o", processIndex, command, args);
+		// command = ensureString(command);
+		// if (isValue(args)) args = Array.from(ensureObject(args), ensureString);
+		// if (!isObject(options)) options = {};
+		// log.debug("[%d] run %s with %o", processIndex, command, args);
 
 		child = spawn(command, args, options)
 			.on("close", (code, signal) => {
@@ -54,14 +54,15 @@ module.exports = (command, args = [], options = {}) => {
 				reject(Object.assign(error, result));
 			});
 
-		setupStd({ processIndex, resolveListeners, child, initResult, result, options });
+		// setupStd({ processIndex, resolveListeners, child, initResult, result, options });
 
-		if (options.shouldCloseStdin) {
-			if (child.stdin) child.stdin.end();
-			else stdinLog.notice("[%d] cannot close stdin, as it's not exposed on a child process");
-		}
+		// if (options.shouldCloseStdin) {
+		// 	if (child.stdin) child.stdin.end();
+		// 	else stdinLog.notice("[%d] cannot close stdin, as it's not exposed on a child process");
+		// }
 	});
 
+	return promise;
 	return mixin(Object.assign(promise, { child }, initResult), {
 		get stdoutBuffer() { return result.stdoutBuffer; },
 		get stderrBuffer() { return result.stderrBuffer; },
