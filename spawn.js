@@ -9,7 +9,7 @@ const ensureString = require("es5-ext/object/validate-stringifiable-value")
     , ensureObject = require("es5-ext/object/valid-object")
     , mixin        = require("es5-ext/object/mixin")
     , log          = require("log").get("child-process-ext:spawn")
-    , { spawn }    = require("child_process")
+    , spawn        = require("cross-spawn")
     , setupStd     = require("./lib/private/spawn/setup-std");
 
 const stdinLog = log.get("std:in");
@@ -20,7 +20,7 @@ module.exports = (command, args = [], options = {}) => {
 	let child;
 	const initResult = {}, result = {}, resolveListeners = [], processIndex = ++processCounter;
 
-	console.error("Use debug spawn");
+	console.error("Use debug spawn v2");
 
 	const promise = new Promise((resolve, reject) => {
 		command = ensureString(command);
