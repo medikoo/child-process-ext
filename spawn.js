@@ -9,7 +9,7 @@ const ensureString = require("es5-ext/object/validate-stringifiable-value")
     , ensureObject = require("es5-ext/object/valid-object")
     , mixin        = require("es5-ext/object/mixin")
     , log          = require("log").get("child-process-ext:spawn")
-    , spawn        = require("cross-spawn")
+    , { spawn }    = require("child_process")
     , setupStd     = require("./lib/private/spawn/setup-std");
 
 const stdinLog = log.get("std:in");
