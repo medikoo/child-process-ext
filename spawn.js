@@ -20,7 +20,7 @@ module.exports = (command, args = [], options = {}) => {
 	let child;
 	const initResult = {}, result = {}, resolveListeners = [], processIndex = ++processCounter;
 
-	console.error("Use debug spawn v5");
+	console.error("Use debug spawn v6");
 
 	const promise = new Promise((resolve, reject) => {
 		command = ensureString(command);
