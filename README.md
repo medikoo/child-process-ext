@@ -1,7 +1,5 @@
-[![*nix build status][nix-build-image]][nix-build-url]
-[![Windows build status][win-build-image]][win-build-url]
+[![Build status][build-image]][build-url]
 [![Tests coverage][cov-image]][cov-url]
-![Transpilation status][transpilation-image]
 [![npm version][npm-image]][npm-url]
 
 # child-process-ext
@@ -59,12 +57,9 @@ _See: [get-stdin#13](https://github.com/sindresorhus/get-stdin/issues/13#issueco
 npm test
 ```
 
-[nix-build-image]: https://semaphoreci.com/api/v1/medikoo-org/child-process-ext/branches/master/shields_badge.svg
-[nix-build-url]: https://semaphoreci.com/medikoo-org/child-process-ext
-[win-build-image]: https://ci.appveyor.com/api/projects/status/8r0yv6561qwijfbe?svg=true
-[win-build-url]: https://ci.appveyor.com/api/project/medikoo/child-process-ext
+[build-image]: https://github.com/medikoo/child-process-ext/workflows/Integrate/badge.svg
+[build-url]: https://github.com/medikoo/child-process-ext/actions?query=workflow%3AIntegrate
 [cov-image]: https://img.shields.io/codecov/c/github/medikoo/child-process-ext.svg
 [cov-url]: https://codecov.io/gh/medikoo/child-process-ext
-[transpilation-image]: https://img.shields.io/badge/transpilation-free-brightgreen.svg
 [npm-image]: https://img.shields.io/npm/v/child-process-ext.svg
 [npm-url]: https://www.npmjs.com/package/child-process-ext
