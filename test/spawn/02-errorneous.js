@@ -18,22 +18,18 @@ describe("spawn - Errorneous execution", () => {
 	);
 
 	it("Errorneous execution should resolve with rejection", () =>
-		program.then(throwUnexpected, noop)
-	);
+		program.then(throwUnexpected, noop));
 
 	it("Errorneous execution result should expose exit code", () =>
-		program.then(throwUnexpected, ({ code }) => assert.equal(code, 3))
-	);
+		program.then(throwUnexpected, ({ code }) => assert.equal(code, 3)));
 
 	it("Errorneous execution result should expose stdout", () =>
 		program.then(throwUnexpected, ({ stdoutBuffer }) =>
 			assert.equal(String(stdoutBuffer), "stdout")
-		)
-	);
+		));
 
 	it("Errorneous execution result should expose stderr", () =>
 		program.then(throwUnexpected, ({ stderrBuffer }) =>
 			assert.equal(String(stderrBuffer), "stderr")
-		)
-	);
+		));
 });

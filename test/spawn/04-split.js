@@ -23,10 +23,8 @@ describe("spawn - Split stdout", () => {
 	it("Should split stderr", () => assert.deepEqual(reportedStderrLines, stderrLines));
 
 	it("stdout should resolve with array of lines", () =>
-		program.stdout.then(result => assert.deepEqual(result, stdoutLines))
-	);
+		program.stdout.then(result => assert.deepEqual(result, stdoutLines)));
 
 	it("stderr should resolve with array of lines", () =>
-		program.stderr.then(result => assert.deepEqual(result, stderrLines))
-	);
+		program.stderr.then(result => assert.deepEqual(result, stderrLines)));
 });

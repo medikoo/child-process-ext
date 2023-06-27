@@ -17,10 +17,8 @@ describe("spawn - Invalid execution", () => {
 		})).catch(noop)
 	);
 	it("Invalid program execution should resolve with rejection", () =>
-		program.then(throwUnexpected, noop)
-	);
+		program.then(throwUnexpected, noop));
 
 	it("Invalid program rejection should expose expected eror code", () =>
-		program.then(throwUnexpected, ({ code }) => assert.equal(code, "ENOENT"))
-	);
+		program.then(throwUnexpected, ({ code }) => assert.equal(code, "ENOENT")));
 });
