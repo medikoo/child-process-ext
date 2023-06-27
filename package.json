@@ -87,5 +87,8 @@
 		"prettify:updated": "pipe-git-updated --ext=css --ext=html --ext=js --ext=json --ext=md --ext=yaml --ext=yml -- prettier --write",
 		"test": "mocha --recursive"
 	},
+	"engines": {
+		"node": ">=6.0"
+	},
 	"license": "ISC"
 }
