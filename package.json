@@ -23,7 +23,7 @@
 		"git-list-updated": "^1.2.1",
 		"husky": "^4.3.8",
 		"lint-staged": "^13.2.2",
-		"mocha": "^6.2.3",
+		"mocha": "^7.2.0",
 		"nyc": "^15.1.0",
 		"prettier-elastic": "^2.2.1"
 	},
