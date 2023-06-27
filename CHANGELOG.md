@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/medikoo/child-process-ext/compare/v2.1.1...v3.0.0) (2023-06-27)
+
+### ⚠ BREAKING CHANGES
+
+- Drop support for Node.js versions lower than v8
+
+### Maintenance Improvements
+
+- Upgrade `cross-spawn` to v7 ([1293c06](https://github.com/medikoo/child-process-ext/commit/1293c068b2336a2ebfa3798b2b534543b03298df))
+
 ### [2.1.1](https://github.com/medikoo/child-process-ext/compare/v2.1.0...v2.1.1) (2020-04-05)
 
 ### Bug Fixes
