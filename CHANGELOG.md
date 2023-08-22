@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.2](https://github.com/medikoo/child-process-ext/compare/v3.0.1...v3.0.2) (2023-08-22)
+
+### Bug Fixes
+
+- Fix handling of just `stderr` being observable ([cf390ff](https://github.com/medikoo/child-process-ext/commit/cf390ff7163061b537a722b0122044bf609a6e21))
+
 ### [3.0.1](https://github.com/medikoo/child-process-ext/compare/v3.0.0...v3.0.1) (2023-06-27)
 
 ### Maintenance Improvements
